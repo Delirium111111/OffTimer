@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'Window.ui'
+# Form generated from reading UI file 'Window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.3.0
+# Created by: Qt User Interface Compiler version 6.3.0
 ##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
+# WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLCDNumber, QLabel, QMainWindow,
-    QSizePolicy, QSlider, QVBoxLayout, QWidget)
+                               QSizePolicy, QSlider, QVBoxLayout, QWidget)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -68,8 +69,8 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"OffTimer", None))
-        self.L_Value_text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate(
+            "MainWindow", u"OffTimer", None))
+        self.L_Value_text.setText(QCoreApplication.translate(
+            "MainWindow", u"TextLabel", None))
     # retranslateUi
-
-    

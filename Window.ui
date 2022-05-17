@@ -74,6 +74,9 @@
      </item>
      <item>
       <widget class="QSlider" name="HS_Value">
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="maximum">
         <number>480</number>
        </property>
