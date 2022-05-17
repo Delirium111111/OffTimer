@@ -10,11 +10,14 @@ from tkinter import S
 import os
 import time
 from unicodedata import name
+import PySide6
 
 import qtmodern.styles
 import qtmodern.windows
 
 from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtGui import QIcon, QAction
+from PySide6.QtWidgets import QSystemTrayIcon, QMenu
 
 from Window import Ui_MainWindow
 
@@ -34,13 +37,17 @@ class OffTimer(QMainWindow):
         self.ui.HS_Value.sliderReleased.connect(self.sldRealise)
         self.ui.HS_Value.valueChanged.connect(self.SyncNumbers)
 
+    def SetUp(self):
+        finish = QAction("Quit", self)
+        finish.triggered.connect(self.closeEvent)
+
     def update(self, i):
         thr = threading.Timer(1, self.update, [i+1])
         if threading.active_count() <= 2:
             thr.start()
         else:
             thr.cancel()
-        
+
         self.s = self.s - 1
         self.Calc(self.s)
         # self.ui.L_Value_text.setText(str(self.s // 60))
@@ -66,27 +73,63 @@ class OffTimer(QMainWindow):
         str_ = str(self.h) + self.dot + str(self.m)
         return str_
 
-    def Calc(self, value = None):
+    def Calc(self, value=None):
         if value == None:
             value = self.TakeAmount()
             self.h = int(value) // 60
             self.m = int(value) % 60
             self.s = int(value) * 60
-        else: 
+        else:
             self.h = (int(value) // 60) // 60
             self.m = (int(value) // 60) % 60
 
     def TakeAmount(self) -> int:
         return int(self.ui.HS_Value.value())
 
+    # TODO Сделать сворачивание в трей, а не закрытие программы
+    def closeEvent(self, event: PySide6.QtGui.QCloseEvent) -> None:
+        self.hide()
+        return super().closeEvent(event)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = OffTimer()
-    window.Calc()
 
+# TODO Сделать нормальное отображение тёмной темы
+def ShowForm():
     qtmodern.styles.dark(app)
     mw = qtmodern.windows.ModernWindow(window)
     mw.show()
 
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
+    window = OffTimer()
+    window.Calc()
+
+    icon = QIcon(
+        "C:\\Users\seryo\Documents\WorkSpace\Python\OffTimer\Icons\Icon.png")
+
+    # Create the tray
+    tray = QSystemTrayIcon()
+    tray.setIcon(icon)
+    tray.setVisible(True)
+
+    # Creating the options
+    menu = QMenu()
+    option1 = QAction("Geeks for Geeks")
+    option2 = QAction("GFG")
+    menu.addAction(option1)
+    menu.addAction(option2)
+
+    quit = QAction("Quit")
+    quit.triggered.connect(app.quit)
+    menu.addAction(quit)
+
+    tray.setContextMenu(menu)
+    # qtmodern.styles.dark(app)
+    # mw = qtmodern.windows.ModernWindow(window)
+
+    # mw.show()
+    # menu.aboutToShow.connect(ShowForm)
+    # TODO Сделать открытие формы по клику на трей
+    tray.activated.connect(ShowForm)
     sys.exit(app.exec())
